@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const db = require("./database");
-const bcrypt = require("bcryptjs"); // For password hashing
+const bcrypt = require("bcryptjs");
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,27 +20,50 @@ app.get("/", (req, res) => {
 // User registration
 app.post("/register", (req, res) => {
   const { username, password } = req.body;
+
+  // Check if the username already exists
+  const userExists = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+  if (userExists) {
+    return res.status(400).json({ error: "Username already exists" });
+  }
+
+  // Hash the password
   const hashedPassword = bcrypt.hashSync(password, 10);
 
+  // Insert the new user
   try {
     const stmt = db.prepare("INSERT INTO users (username, password) VALUES (?, ?)");
     const result = stmt.run(username, hashedPassword);
     res.json({ id: result.lastInsertRowid });
   } catch (error) {
-    res.status(400).json({ error: "Username already exists" });
+    res.status(500).json({ error: "Registration failed" });
   }
 });
 
 // User login
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
 
-  if (user && bcrypt.compareSync(password, user.password)) {
-    res.json({ id: user.id, username: user.username });
-  } else {
-    res.status(401).json({ error: "Invalid username or password" });
+  // Find the user by username
+  const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+  if (!user) {
+    return res.status(401).json({ error: "Invalid username or password" });
   }
+
+  // Compare the hashed password
+  const passwordMatch = bcrypt.compareSync(password, user.password);
+  if (!passwordMatch) {
+    return res.status(401).json({ error: "Invalid username or password" });
+  }
+
+  // Login successful
+  res.json({ id: user.id, username: user.username });
+});
+
+// Get all activities
+app.get("/activities", (req, res) => {
+  const activities = db.prepare("SELECT * FROM activities").all();
+  res.json(activities);
 });
 
 // Get activities for a specific user
@@ -59,26 +82,6 @@ app.post("/activities", (req, res) => {
   `);
   const result = stmt.run(userId, name, description, image, target, deadline);
   res.json({ id: result.lastInsertRowid });
-});
-
-// Add a transaction
-app.post("/transactions", (req, res) => {
-  const { activityId, transactionId, amount } = req.body;
-  const stmt = db.prepare(`
-    INSERT INTO transactions (activityId, transactionId, amount)
-    VALUES (?, ?, ?)
-  `);
-  stmt.run(activityId, transactionId, amount);
-
-  // Update funds collected for the activity
-  const updateStmt = db.prepare(`
-    UPDATE activities
-    SET fundsCollected = fundsCollected + ?
-    WHERE id = ?
-  `);
-  updateStmt.run(amount, activityId);
-
-  res.json({ success: true });
 });
 
 // Start Server

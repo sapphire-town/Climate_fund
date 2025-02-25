@@ -1,18 +1,25 @@
 const Database = require("better-sqlite3");
-
-// Connect to the database (or create it if it doesn't exist)
 const db = new Database("crowdfunding.db");
 
 // Create tables if they don't exist
 db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+  );
+
   CREATE TABLE IF NOT EXISTS activities (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId INTEGER NOT NULL,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     image TEXT NOT NULL,
     target INTEGER NOT NULL,
     deadline TEXT NOT NULL,
-    fundsCollected INTEGER DEFAULT 0
+    fundsCollected INTEGER DEFAULT 0,
+    status TEXT DEFAULT 'active',
+    FOREIGN KEY (userId) REFERENCES users (id)
   );
 
   CREATE TABLE IF NOT EXISTS transactions (

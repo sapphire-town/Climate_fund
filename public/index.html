@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Crowdfunding</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav>
+      <div class="nav-container">
+        <h1>CLIMATE CROWD FUNDING</h1>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#about_div">About</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  <!-- Home Section -->
+  <section id="home">
+    <div class="home-content">
+      <h2>We Are a Crowdfunding Application</h2>
+      <p>Join us in funding impactful environmental projects to combat climate change.</p>
+      <a href="#register" class="btn-primary">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Register Section -->
+  <section id="register" class="container">
     <h1>Register</h1>
     <form id="registerForm">
       <label for="username">Username:</label>
@@ -19,7 +45,38 @@
       <button type="submit" class="btn-primary">Register</button>
     </form>
     <p>Already have an account? <a href="login.html">Login</a></p>
-  </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about_div">
+    <div class="about-container">
+      <div class="about-image">
+        <img src="about_img.jpg" alt="About Us">
+      </div>
+      <div class="about-content">
+        <h3>About</h3>
+        <p>
+          Welcome to our Climate Change Crowdfunding Platform—a secure, transparent space dedicated to funding impactful environmental projects.
+          Powered by blockchain technology, we ensure your contributions are safeguarded through smart contracts. If the campaign's goal isn't
+          met, deadlines aren't honored, or the proposed activity is canceled or unperformed, your funds are automatically refunded.
+          Together, let's support innovative solutions to combat climate change while ensuring accountability and trust at every step.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-container">
+      <p>Email: revathi.ci22@bmsce.ac.in</p>
+      <div class="social-icons">
+        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="mailto:revathi.ci22@bmsce.ac.in"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
 
   <script src="dashboard.js"></script>
 </body>

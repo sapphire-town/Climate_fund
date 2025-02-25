@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contribute</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="nav-container">
+      <h1>CLIMATE CROWD FUNDING</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#about_div">About</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="contribute.html">Contribute</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>All Activities</h1>
+    <div class="controls">
+      <input type="text" id="searchBar" placeholder="Search activities...">
+      <select id="sortOptions">
+        <option value="latest">Latest Activities</option>
+        <option value="closest">Closest to Completion</option>
+      </select>
+      <i class="fas fa-sort sort-icon"></i>
+    </div>
+    <div id="allActivitiesList" class="activities-grid"></div>
+  </div>
+
+  <script src="contribute.js"></script>
+</body>
+</html>

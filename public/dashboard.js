@@ -1,51 +1,55 @@
-// Handle registration
-document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  const response = await fetch("/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-
-  if (response.ok) {
-    alert("Registration successful! Please login.");
-    window.location.href = "login.html";
-  } else {
-    const data = await response.json();
-    alert(data.error || "Registration failed");
-  }
-});
-
-// Handle login
-document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  const response = await fetch("/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-
-  if (response.ok) {
-    const user = await response.json();
-    localStorage.setItem("user", JSON.stringify(user));
-    window.location.href = "dashboard.html"; // Redirect to dashboard
-  } else {
-    alert("Invalid username or password");
-  }
-});
-
-// Check if user is logged in
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user && window.location.pathname.endsWith("dashboard.html")) {
   window.location.href = "login.html"; // Redirect to login if not logged in
 }
+
+// Open Initiate Activity Modal
+document.getElementById("initiateActivity").addEventListener("click", () => {
+  document.getElementById("activityModal").style.display = "flex";
+});
+
+// Close Modal
+document.querySelector(".close").addEventListener("click", () => {
+  document.getElementById("activityModal").style.display = "none";
+});
+
+// Handle Activity Form Submission
+document.getElementById("activityForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("activityName").value;
+  const description = document.getElementById("activityDescription").value;
+  const image = document.getElementById("activityImage").value;
+  const target = parseInt(document.getElementById("activityTarget").value);
+  const deadline = document.getElementById("activityDeadline").value;
+
+  // Validate deadline (min 5 minutes, max 30 days)
+  const now = new Date();
+  const deadlineDate = new Date(deadline);
+  const minDeadline = new Date(now.getTime() + 5 * 60000); // 5 minutes
+  const maxDeadline = new Date(now.getTime() + 30 * 24 * 60 * 60000); // 30 days
+
+  if (deadlineDate < minDeadline || deadlineDate > maxDeadline) {
+    alert("Deadline must be between 5 minutes and 30 days from now.");
+    return;
+  }
+
+  // Create activity
+  const response = await fetch("/activities", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId: user.id, name, description, image, target, deadline }),
+  });
+
+  if (response.ok) {
+    alert("Activity created successfully!");
+    document.getElementById("activityModal").style.display = "none";
+    fetchActivities(); // Refresh the activities list
+  } else {
+    alert("Failed to create activity. Please try again.");
+  }
+});
 
 // Fetch user-specific activities
 async function fetchActivities() {
@@ -65,7 +69,7 @@ async function fetchActivities() {
 // Render activities
 function renderActivities(activities) {
   const activitiesList = document.getElementById("activitiesList");
-  if (!activitiesList) return; // Exit if the element doesn't exist
+  if (!activitiesList) return;
 
   activitiesList.innerHTML = activities
     .map(
@@ -77,6 +81,7 @@ function renderActivities(activities) {
           <div class="progress" style="width: ${(activity.fundsCollected / activity.target) * 100}%"></div>
         </div>
         <p>₹${activity.fundsCollected} / ₹${activity.target}</p>
+        <p>Status: ${activity.status}</p>
         <button class="btn-primary" onclick="openDonationModal(${activity.id})">Contribute</button>
       </div>
     `
@@ -84,13 +89,5 @@ function renderActivities(activities) {
     .join("");
 }
 
-// Open donation modal
-function openDonationModal(activityId) {
-  // Implement this function to open the donation modal
-  console.log("Open donation modal for activity ID:", activityId);
-}
-
-// Initial fetch (only on the dashboard page)
-if (window.location.pathname.endsWith("dashboard.html")) {
-  fetchActivities();
-}
+// Initial fetch
+fetchActivities();
