@@ -5,7 +5,10 @@ const path = require("path");
 const db = require("./database");
 const bcrypt = require("bcryptjs");
 
+// Initialize Express app
 const app = express();
+
+// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
