@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const db = require("./database");
 const bcrypt = require("bcryptjs");
+const axios = require("axios");
 
 // Initialize Express app
 const app = express();
@@ -86,6 +87,31 @@ app.post("/activities", (req, res) => {
   const result = stmt.run(userId, name, description, image, target, deadline);
   res.json({ id: result.lastInsertRowid });
 });
+
+
+
+// Verify Transaction
+app.post("/verify-transaction", async (req, res) => {
+  const { transactionId, amount } = req.body;
+
+  try {
+    const response = await axios.get(`https://api.razorpay.com/v1/payments/${transactionId}`, {
+      auth: {
+        username: "YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay API Key
+        password: "YOUR_RAZORPAY_KEY_SECRET", // Replace with your Razorpay API Secret
+      },
+    });
+
+    if (response.data.amount === amount * 100 && response.data.status === "captured") {
+      res.json({ success: true });
+    } else {
+      res.status(400).json({ success: false });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+});
+
 
 // Start Server
 const PORT = 5000;

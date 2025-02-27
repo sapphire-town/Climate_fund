@@ -1,5 +1,7 @@
 let activities = [];
 
+
+
 // Fetch activities from the backend
 async function fetchActivities() {
   const response = await fetch("/activities");

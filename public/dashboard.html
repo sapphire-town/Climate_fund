@@ -25,36 +25,46 @@
 
   <div class="container">
     <h1>Your Activities</h1>
+     <!-- Ongoing Activities -->
     <div id="activitiesList" class="activities-grid"></div>
     <button id="initiateActivity" class="btn-primary">Initiate Activity</button>
     <button id="viewHistory" class="btn-primary" onclick="viewHistory()">View History</button>
   </div>
 
-  <!-- Initiate Activity Modal -->
-  <div id="activityModal" class="modal">
-    <div class="modal-content card">
-      <span class="close">&times;</span>
-      <h2>Initiate Activity</h2>
-      <form id="activityForm">
-        <label for="activityName">Activity Name:</label>
-        <input type="text" id="activityName" placeholder="Enter activity name" required>
+  
 
-        <label for="activityDescription">Description:</label>
-        <textarea id="activityDescription" placeholder="Describe the activity" required></textarea>
+   
+    <div id="activitiesList" class="activities-grid"></div>
 
-        <label for="activityImage">Image URL:</label>
-        <input type="text" id="activityImage" placeholder="Enter image URL" required>
+    <!-- Initiate Activity Modal -->
+    <div id="activityModal" class="modal">
+      <div class="modal-content card">
+        <span class="close">&times;</span>
+        <h2>Initiate Activity</h2>
+        <form id="activityForm">
+          <label for="activityName">Activity Name:</label>
+          <input type="text" id="activityName" placeholder="Enter activity name" required>
 
-        <label for="activityTarget">Target Amount (₹):</label>
-        <input type="number" id="activityTarget" placeholder="Enter target amount" required>
+          <label for="activityDescription">Description:</label>
+          <textarea id="activityDescription" placeholder="Describe the activity" required></textarea>
 
-        <label for="activityDeadline">Deadline:</label>
-        <input type="datetime-local" id="activityDeadline" required>
+          <label for="activityImage">Image URL:</label>
+          <input type="text" id="activityImage" placeholder="Enter image URL" required>
 
-        <button type="submit" class="btn-primary">Create Activity</button>
-      </form>
+          <label for="activityTarget">Total Fund Goal (₹):</label>
+          <input type="number" id="activityTarget" placeholder="Enter target amount" required>
+
+          <label for="activityDeadline">Deadline:</label>
+          <input type="datetime-local" id="activityDeadline" required>
+
+          <button type="submit" class="btn-primary">Create Activity</button>
+        </form>
+      </div>
     </div>
-  </div>
+
+    
+
+    
 
   <script src="dashboard.js"></script>
 </body>
