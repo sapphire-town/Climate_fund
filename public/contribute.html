@@ -4,57 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contribute</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="contribute.css">
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav>
-    <div class="nav-container">
-      <h1>CLIMATE CROWD FUNDING</h1>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#about_div">About</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-        <li><a href="contribute.html">Contribute</a></li>
-        <li><a href="login.html">Login</a></li>
+  <div class="container">
+    <h1>Contribute</h1>
+
+    <!-- Ongoing Activities Section -->
+    <div class="ongoing-activities">
+      <h2>Ongoing Activities</h2>
+      <ul id="activitiesList">
+        <!-- Activities will be dynamically inserted here -->
       </ul>
     </div>
-  </nav>
-
-  <div class="container">
-    <h1>All Activities</h1>
-    <div class="controls">
-      <input type="text" id="searchBar" placeholder="Search activities...">
-      <select id="sortOptions">
-        <option value="latest">Latest Activities</option>
-        <option value="closest">Closest to Completion</option>
-      </select>
-      <i class="fas fa-sort sort-icon"></i>
-    </div>
-    <div id="allActivitiesList" class="activities-grid"></div>
   </div>
 
-  <!-- Donation Modal -->
-  <div id="donationModal" class="modal">
-    <div class="modal-content card">
-      <span class="close">&times;</span>
-      <h2>Contribute</h2>
-      <img src="../assets/upi-scanner.jpg" alt="UPI QR Code" class="qr-code">
-      <form id="transactionForm">
-        <label for="transactionId">Transaction ID:</label>
-        <input type="text" id="transactionId" placeholder="Enter UPI Transaction ID" required>
-
-        <label for="amount">Amount (₹):</label>
-        <input type="number" id="amount" placeholder="Enter amount" required>
-
-        <button type="submit" class="btn-primary">Submit Transaction</button>
-      </form>
-    </div>
+  <div id="activity-container" class="activity-grid">
+    <!-- Activities will be dynamically inserted here -->
+  </div>
+  <div id="allActivitiesList"></div>
 
   <script src="contribute.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
