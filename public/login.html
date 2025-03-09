@@ -21,6 +21,26 @@
     <p>Don't have an account? <a href="index.html">Register</a></p>
   </div>
 
-  <script src="dashboard.js"></script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        localStorage.setItem("user", JSON.stringify(user));
+        window.location.href = "dashboard.html"; // Redirect to dashboard
+      } else {
+        alert("Invalid username or password");
+      }
+    });
+  </script>
 </body>
 </html>

@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Climate Change Crowdfunding</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
-  <!-- Navigation Bar -->
   <nav>
     <div class="nav-container">
       <h1>CLIMATE CROWD FUNDING</h1>
@@ -22,18 +20,23 @@
       </ul>
     </div>
   </nav>
-
   <div class="container">
-    <h1>Your Activities</h1>
-     <!-- Ongoing Activities -->
-    <div id="activitiesList" class="activities-grid"></div>
-    <button id="initiateActivity" class="btn-primary">Initiate Activity</button>
-    <button id="viewHistory" class="btn-primary" onclick="viewHistory()">View History</button>
-  </div>
+    <header>
+      <h1>🌍 Climate Change Crowdfunding</h1>
+      <button id="initiateActivity" class="btn-primary">Initiate Activity</button>
+    </header>
 
-  
 
-   
+    <!-- Search and Sort -->
+    <div class="controls">
+      <input type="text" id="searchBar" placeholder="Search activities...">
+      <select id="sortOptions">
+        <option value="latest">Latest Activities</option>
+        <option value="closest">Closest to Completion</option>
+      </select>
+    </div>
+
+    <!-- Ongoing Activities -->
     <div id="activitiesList" class="activities-grid"></div>
 
     <!-- Initiate Activity Modal -->
@@ -51,9 +54,6 @@
           <label for="activityImage">Image URL:</label>
           <input type="text" id="activityImage" placeholder="Enter image URL" required>
 
-          <label for="activityTarget">Total Fund Goal (₹):</label>
-          <input type="number" id="activityTarget" placeholder="Enter target amount" required>
-
           <label for="activityDeadline">Deadline:</label>
           <input type="datetime-local" id="activityDeadline" required>
 
@@ -62,10 +62,25 @@
       </div>
     </div>
 
-    
+    <!-- Donation Modal -->
+    <div id="donationModal" class="modal">
+      <div class="modal-content card">
+        <span class="close">&times;</span>
+        <h2>Contribute</h2>
+        <img src="https://via.placeholder.com/200x200" alt="UPI QR Code" class="qr-code">
+        <form id="transactionForm">
+          <label for="transactionId">Transaction ID:</label>
+          <input type="text" id="transactionId" placeholder="Enter UPI Transaction ID" required>
 
-    
+          <label for="amount">Amount (₹):</label>
+          <input type="number" id="amount" placeholder="Enter amount" required>
 
-  <script src="dashboard.js"></script>
+          <button type="submit" class="btn-primary">Submit Transaction</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
